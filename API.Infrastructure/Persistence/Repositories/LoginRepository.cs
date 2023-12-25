@@ -1,4 +1,5 @@
 ﻿using Domain.Users;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 namespace Infrastructure.Persistence.Repositories
@@ -14,8 +15,19 @@ namespace Infrastructure.Persistence.Repositories
 
 		public async Task<bool> LoginAsync(User user)
 		{
-			await Task.CompletedTask;
-			return true;
+			User userExists;
+
+			try
+			{
+				userExists = await _context.User.FirstOrDefaultAsync(u => u.UserName == user.UserName && u.Password == user.Password);
+			}
+			catch (Exception e)
+			{
+				Log.Error($"Error searching user in the database - {e.Message}");
+				return false;
+			}
+
+			return userExists != null;
 		}
 
 		public async Task<bool> SingInAsync(User user)

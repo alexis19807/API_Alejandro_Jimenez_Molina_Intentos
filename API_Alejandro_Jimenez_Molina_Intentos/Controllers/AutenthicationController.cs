@@ -44,8 +44,8 @@ namespace API_Alejandro_Jimenez_Molina.Controllers
 
 			var tokenDescriptor = new SecurityTokenDescriptor
 			{
-				Issuer = "https://localhost:7121/",
-				Audience = "https://localhost:7121/",
+				Issuer = "https://localhost:7122/",
+				Audience = "https://localhost:7122/",
 				Subject = claims,
 				Expires = DateTime.UtcNow.AddMinutes(5),
 				SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256),
